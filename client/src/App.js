@@ -45,7 +45,6 @@ class App extends Component {
 	}
 
 	onUpdatePickup(pickupDates) {
-		console.log(pickupDates);
 		this.setState({
 			pickupDates,
 		});
@@ -82,7 +81,7 @@ class App extends Component {
 								/>
 							</Grid>
 							<Grid item xs={12}>
-								<Estimation estimable={isAddressesValid(this.state.addresses) && this.state.merchandise.isValid && isPickupValid(this.state.pickupDates)} addresses={this.state.addresses} merchandise={this.state.merchandise} pickup={this.state.pickupDates} />
+								<Estimation estimable={isAddressesValid(this.state.addresses) && this.state.merchandise.isValid && isPickupValid(this.state.pickupDates) && isDeliveryValid(this.state.deliveryDates)} addresses={this.state.addresses} merchandise={this.state.merchandise} pickup={this.state.pickupDates} />
 							</Grid>
 						</Grid>
           </Grid>
