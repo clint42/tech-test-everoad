@@ -26,17 +26,14 @@ const styles = theme => ({
   },
 });
 
-// When suggestion is clicked, Autosuggest needs to populate the input
-// based on the clicked suggestion. Teach Autosuggest how to calculate the
-// input value for every given suggestion.
-const getSuggestionValue = suggestion => suggestion.description;
+const getSuggestionValue = suggestion => suggestion;
 
 const renderSuggestion = (suggestion, { query, isHighlighted }) => {
   const matches = match(suggestion.description, query);
   const parts = parse(suggestion.description, matches);
 
   return (
-    <MenuItem selected={isHighlighted} component="div">
+    <MenuItem value={suggestion} selected={isHighlighted} component="div">
       <div>
         {parts.map((part, index) => {
           return part.highlight ? (
@@ -90,9 +87,16 @@ class AddressAutoSuggest extends Component {
   }
 
   onChange = (event, { newValue }) => {
-    this.setState({
-      value: newValue
-    });
+    if (typeof newValue === 'string') {
+      this.setState({
+        value: newValue
+      });
+    } else {
+      this.setState({
+        value: newValue.description,
+      });
+      this.props.onChange(newValue);
+    }
   };
 
   // Autosuggest will call this function every time you need to update suggestions.
@@ -105,7 +109,7 @@ class AddressAutoSuggest extends Component {
 
     this.autocompleteService.getPlacePredictions(request, data => {
       this.setState({
-        suggestions: data
+        suggestions: data || []
       });
     });
   };
@@ -151,6 +155,7 @@ class AddressAutoSuggest extends Component {
           />
         )}
         renderSuggestionsContainer={renderSuggestionsContainer}
+        focusInputOnSuggestionClick={false}
       />
     );
   }

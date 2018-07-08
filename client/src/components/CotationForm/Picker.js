@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
 import { FormControl, Select, MenuItem, InputLabel } from '@material-ui/core';
 
+const renderValue = (value) => (`${value[0]} x ${value[1]}cm`);
+
 export default class Picker extends Component {
-  constructor() {
+  constructor(props) {
     super();
 
     this.state = {
@@ -15,11 +16,11 @@ export default class Picker extends Component {
     this.setState({
       value: event.target.value,
     });
+    this.props.onChange(event);
   }
 
   render() {
-    console.log(this.state);
-    const { name, label, values, defaultValue } = this.props;
+    const { name, label, values, defaultValueIndex } = this.props;
     const { value } = this.state;
 
     return (
@@ -27,11 +28,12 @@ export default class Picker extends Component {
       <InputLabel htmlFor="dimension">{label}</InputLabel>
       <Select
         name={name}
-        value={value || defaultValue.value}
+        value={value || values[defaultValueIndex]}
+        renderValue={renderValue}
         onChange={(e) => { this.handleChange(e) }}>
         {
           values.map((value) => (
-            <MenuItem value={value.value}>{value.label}</MenuItem>
+            <MenuItem key={renderValue(value)} value={value}>{renderValue(value)}</MenuItem>
           ))
         }
       </Select>
