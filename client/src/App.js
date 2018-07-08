@@ -1,22 +1,32 @@
 import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
-import logo from './logo.svg';
+import {  withStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
-class App extends Component {
-  render() {
-    return (
-      <div style={{padding:20}}>
-        <Grid container>
-          <Grid item xs={8}>
-            Form placeholder
-          </Grid>
-          <Grid item xs={4}>
-            Summary + Price placeholder
-          </Grid>
-        </Grid>
-      </div>
-    );
-  }
+import CotationForm from './components/CotationForm';
+
+const styles = {
+	root: {
+		padding: 40,
+	},
 }
 
-export default App;
+class App extends Component {
+	render() {
+		const { classes } = this.props;
+
+		return (
+				<Grid container spacing={32} className={classes.root}>
+				<CssBaseline />
+					<Grid item xs={9}>
+						<CotationForm />
+					</Grid>
+					<Grid item xs={3}>
+						Summary + Price placeholder
+          </Grid>
+				</Grid>
+		);
+	}
+}
+
+export default withStyles(styles)(App);
