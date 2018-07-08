@@ -4,6 +4,8 @@ import {  withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import CotationForm from './components/CotationForm';
+import Summary from './components/Summary';
+import Estimation from './components/Estimation';
 
 const styles = {
 	root: {
@@ -22,7 +24,14 @@ class App extends Component {
 						<CotationForm />
 					</Grid>
 					<Grid item xs={3}>
-						Summary + Price placeholder
+						<Grid container column spacing={32}>
+							<Grid item xs={12}>
+								<Summary />
+							</Grid>
+							<Grid item xs={12}>
+								<Estimation />
+							</Grid>
+						</Grid>
           </Grid>
 				</Grid>
 		);
